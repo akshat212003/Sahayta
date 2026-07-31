@@ -13,6 +13,7 @@ public class UserProfileDTO {
     private String city;
     private String bio;
     private String profilePicture;
+    private String paymentQrCode;
     private Double latitude;
     private Double longitude;
     private boolean isActive;
@@ -22,7 +23,7 @@ public class UserProfileDTO {
     public UserProfileDTO() {}
 
     public UserProfileDTO(Long id, String name, String email, String phone, Role role,
-                          String address, String city, String bio, String profilePicture,
+                          String address, String city, String bio, String profilePicture, String paymentQrCode,
                           Double latitude, Double longitude, boolean isActive, String approvalStatus, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
@@ -33,6 +34,7 @@ public class UserProfileDTO {
         this.city = city;
         this.bio = bio;
         this.profilePicture = profilePicture;
+        this.paymentQrCode = paymentQrCode;
         this.latitude = latitude;
         this.longitude = longitude;
         this.isActive = isActive;
@@ -58,6 +60,8 @@ public class UserProfileDTO {
     public void setBio(String bio) { this.bio = bio; }
     public String getProfilePicture() { return profilePicture; }
     public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+    public String getPaymentQrCode() { return paymentQrCode; }
+    public void setPaymentQrCode(String paymentQrCode) { this.paymentQrCode = paymentQrCode; }
     public Double getLatitude() { return latitude; }
     public void setLatitude(Double latitude) { this.latitude = latitude; }
     public Double getLongitude() { return longitude; }

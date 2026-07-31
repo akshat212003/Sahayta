@@ -89,6 +89,15 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("profilePicture", pictureUrl));
     }
 
+    @PostMapping("/upload-qr")
+    public ResponseEntity<Map<String, String>> uploadPaymentQrCode(
+            Authentication authentication,
+            @RequestParam("file") MultipartFile file) throws IOException {
+        User user = (User) authentication.getPrincipal();
+        String qrUrl = userService.uploadPaymentQrCode(user.getEmail(), file);
+        return ResponseEntity.ok(Map.of("paymentQrCode", qrUrl));
+    }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody Map<String, String> body) {
         String email = body.get("email");

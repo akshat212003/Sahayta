@@ -45,6 +45,8 @@ public class User implements UserDetails {
 
     private String profilePicture;
 
+    private String paymentQrCode;
+
     private Double latitude;
 
     private Double longitude;
@@ -110,6 +112,8 @@ public class User implements UserDetails {
     public void setBio(String bio) { this.bio = bio; }
     public String getProfilePicture() { return profilePicture; }
     public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+    public String getPaymentQrCode() { return paymentQrCode; }
+    public void setPaymentQrCode(String paymentQrCode) { this.paymentQrCode = paymentQrCode; }
     public Double getLatitude() { return latitude; }
     public void setLatitude(Double latitude) { this.latitude = latitude; }
     public Double getLongitude() { return longitude; }

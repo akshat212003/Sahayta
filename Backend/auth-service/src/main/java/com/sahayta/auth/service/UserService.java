@@ -323,11 +323,31 @@ public class UserService {
         refreshTokenService.deleteToken(user);
     }
 
+    public String uploadPaymentQrCode(String email, MultipartFile file) throws IOException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Path uploadPath = Paths.get(UPLOAD_DIR + "/qrcodes");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        String originalFilename = file.getOriginalFilename();
+        String extension = originalFilename != null && originalFilename.contains(".") 
+                ? originalFilename.substring(originalFilename.lastIndexOf(".")) : ".png";
+        String filename = UUID.randomUUID().toString() + extension;
+        Path filePath = uploadPath.resolve(filename);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        String qrUrl = "/uploads/qrcodes/" + filename;
+        user.setPaymentQrCode(qrUrl);
+        user.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user);
+        return qrUrl;
+    }
+
     private UserProfileDTO toDTO(User user) {
         return new UserProfileDTO(
                 user.getId(), user.getName(), user.getEmail(), user.getPhone(),
                 user.getRole(), user.getAddress(), user.getCity(), user.getBio(),
-                user.getProfilePicture(), user.getLatitude(), user.getLongitude(),
+                user.getProfilePicture(), user.getPaymentQrCode(), user.getLatitude(), user.getLongitude(),
                 user.isActive(), user.getApprovalStatus(), user.getCreatedAt()
         );
     }
