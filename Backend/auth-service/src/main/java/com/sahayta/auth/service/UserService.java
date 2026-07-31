@@ -54,6 +54,10 @@ public class UserService {
     private static final String UPLOAD_DIR = "uploads/profile-pictures/";
 
     public RegisterResponse registerUser(RegisterRequest request) {
+        // Admin registration is permanently disabled — only one admin exists
+        if (request.getRole() == Role.ADMIN) {
+            throw new RuntimeException("Admin registration is not allowed. Contact the platform owner.");
+        }
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
@@ -113,6 +117,12 @@ public class UserService {
     }
 
     public LoginResponse loginUser(LoginRequest request) {
+        // Enforce single admin account — no other email can log in as ADMIN
+        if (request.getRole() == Role.ADMIN &&
+                !"sahaytaadmin@gmail.com".equalsIgnoreCase(request.getEmail())) {
+            throw new RuntimeException("Admin access denied. Only the official admin account may log in.");
+        }
+
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("No account found with email: " + request.getEmail() + ". Please register first."));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
