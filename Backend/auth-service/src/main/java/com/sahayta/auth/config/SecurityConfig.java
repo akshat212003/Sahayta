@@ -60,6 +60,7 @@ public class SecurityConfig {
                     "/auth/reset-password",
                     "/auth/public-stats",
                     "/auth/public-ngos",
+                    "/uploads/**",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html"
