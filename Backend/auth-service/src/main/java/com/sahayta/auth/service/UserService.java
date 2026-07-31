@@ -326,7 +326,7 @@ public class UserService {
     public String uploadPaymentQrCode(String email, MultipartFile file) throws IOException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        Path uploadPath = Paths.get(UPLOAD_DIR + "/qrcodes");
+        Path uploadPath = Paths.get("uploads/qrcodes");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
